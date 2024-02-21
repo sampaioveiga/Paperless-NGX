@@ -1,2 +1,2 @@
-# Paperless-XNG
+# Paperless-NGX
 Paperless API Frontend
