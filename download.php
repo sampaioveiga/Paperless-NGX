@@ -11,6 +11,6 @@
     $context = stream_context_create($opts);
     $file = file_get_contents($url, false, $context);
     header('Content-Type: application/pdf');
-    header('Content-Disposition: attachment; filename="' . $title . '"');
+    header('Content-Disposition: attachment; filename="' . $title . '.pdf"');
     echo $file;
 ?>;
