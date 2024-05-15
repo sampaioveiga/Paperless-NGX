@@ -72,7 +72,7 @@ $(document).ready(function(){
             ]
         ];
         $context = stream_context_create($opts);
-        $file = file_get_contents('http://IP:PORT/api/documents/?query=tag:' . $param, false, $context);
+        $file = file_get_contents('http://IP:PORT/api/documents/?ordering=-createdquery=tag:' . $param, false, $context);
         echo $file;
     ?>;
     
