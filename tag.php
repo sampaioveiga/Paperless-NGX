@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Biblioteca Digital ULS Nordeste</title>
+    <title>Manual de Certifica&ccedil;&atilde;o DGS 2024</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -10,6 +10,8 @@
     <style>
         #title {
             margin-top:75px;
+        }
+        #subtitle {
             margin-bottom:50px;
         }
         #content {
@@ -26,27 +28,14 @@
             <img src="/img/Logo_ULSNordeste2024_Small.png" alt="Avatar Logo" style="width:200px;" class="rounded-pill"> 
         </a>
         
-        <!-- Links -->
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="tags.php">Etiquetas</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/">Intranet</a>
-            </li>
-        </ul>
+        <!-- Search -->
+        <form class="d-flex" action="search.php">
+            <input class="form-control me-2" id="q" name="q" type="search" placeholder="Pesquisar" aria-label="Search">
+            <button class="btn btn-outline-primary" type="submit">Pesquisar</button>
+        </form>
     </div>
 </nav>
 <!-- Content -->
-<!--<div class="container">
-    <h1 class="display-1" id="title">Biblioteca de Documentos</h1>
-    <form action="search.php">
-        <div class="mb-3">
-            <input type="text" class="form-control" id="q" value="<?php echo htmlspecialchars($_GET["q"]); ?>" name="q">
-        </div>
-        <button type="submit" class="btn btn-primary">Procurar</button>
-    </form>
-</div>-->
 <!-- Search results content -->
 <div class="container" id="content"></div>
 <!-- Footer -->
@@ -68,21 +57,22 @@ $(document).ready(function(){
         $opts = [
             "http" => [
                 "method" => "GET",
-                "header" => "Authorization: Token <KEY>"
+                "header" => "Authorization: Token dc40ac0885827d22b8f9fb49b2044f62d732dcc2"
             ]
         ];
         $context = stream_context_create($opts);
-        $file = file_get_contents('http://IP:PORT/api/documents/?ordering=-createdquery=tag:' . $param, false, $context);
+        $file = file_get_contents('http://192.168.1.175:8000/api/documents/?ordering=-created&query=tag:' . $param, false, $context);
         echo $file;
     ?>;
     
     if (response.count == 0) {
         $("#content").html('<div class="container"><h1>Sem resultados</h1></div>');
     } else {
-        $("#content").append('<h1 class="display-1" id="title"><small>etiqueta</small> <?php echo substr(htmlspecialchars($_GET["q"]),6,-6); ?></h1>');
+        $("#content").append('<h1 class="display-1" id="title">Manual de Certifica&ccedil;&atilde;o DGS 2024</h1>');
+        $("#content").append('<h2 class="display-2" id="subtitle"><?php echo substr(htmlspecialchars($_GET["q"]),6,-6); ?></h2>');
         $("#content").append('<ul id="results" class="list-group">');
         for (result of response.results) {
-            let txt = '<li class="list-group-item"><a href="./download.php?file=' + result.id + '&title=' + result.title + '"><p class="h3">' + result.created_date + ': ' + result.title + '</p></a><p>' + result.__search_hit__.highlights + '</p></li>';
+            let txt = '<li class="list-group-item"><a href="./download.php?file=' + result.id + '&title=' + result.title + '"><p class="h3">' + result.title + ' ' + result.created_date + '</p></a><p>' + result.__search_hit__.highlights + '</p></li>';
             $("#results").append(txt);
         }
         $("#content").append('</ul>');

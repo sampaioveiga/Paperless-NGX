@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Biblioteca Digital ULS Nordeste</title>
+    <title>Manual de Certifica&ccedil;&atilde;o DGS 2024</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -25,26 +25,16 @@
             <img src="/img/Logo_ULSNordeste2024_Small.png" alt="Avatar Logo" style="width:200px;" class="rounded-pill"> 
         </a>
         
-        <!-- Links -->
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="tags.php">Etiquetas</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/">Intranet</a>
-            </li>
-        </ul>
+        <!-- Search -->
+        <form class="d-flex" action="search.php">
+            <input class="form-control me-2" id="q" name="q" type="search" placeholder="Pesquisar" aria-label="Search" value="<?php echo htmlspecialchars($_GET["q"]); ?>">
+            <button class="btn btn-outline-primary" type="submit">Pesquisar</button>
+        </form>
     </div>
 </nav>
 <!-- Content -->
 <div class="container">
-    <h1 class="display-1" id="title">Biblioteca de Documentos <small>resultados</small></h1>
-    <form action="search.php">
-        <div class="mb-3">
-            <input type="text" class="form-control" id="q" value="<?php echo htmlspecialchars($_GET["q"]); ?>" name="q">
-        </div>
-        <button type="submit" class="btn btn-primary">Procurar</button>
-    </form>
+    <h1 class="display-1" id="title">Manual de Certifica&ccedil;&atilde;o DGS 2024</h1>
 </div>
 <!-- Search results content -->
 <div class="container" id="content"></div>
@@ -67,11 +57,11 @@ $(document).ready(function(){
         $opts = [
             "http" => [
                 "method" => "GET",
-                "header" => "Authorization: Token <KEY>"
+                "header" => "Authorization: Token 1a82dd4d2d9dcd78bfca63afb1f24d3837d0c675"
             ]
         ];
         $context = stream_context_create($opts);
-        $file = file_get_contents('http:/IP:PORT/api/documents/?query=' . $param, false, $context);
+        $file = file_get_contents('http://192.168.1.175:8000/api/documents/?query=' . $param, false, $context);
         echo $file;
     ?>;
     
@@ -80,7 +70,7 @@ $(document).ready(function(){
     } else {
         $("#content").append('<ul id="results" class="list-group">');
         for (result of response.results) {
-            let txt = '<li class="list-group-item"><a href="./download.php?file=' + result.id + '&title=' + result.title + '"><p class="h3">' + result.created_date + ' ' + result.title + '</p></a><p>' + result.__search_hit__.highlights + '</p></li>';
+            let txt = '<li class="list-group-item"><a href="./download.php?file=' + result.id + '&title=' + result.title + '"><p class="h3">' + result.title + '</p></a><p>' + result.__search_hit__.highlights + '</p></li>';
             $("#results").append(txt);
         }
         $("#content").append('</ul>');

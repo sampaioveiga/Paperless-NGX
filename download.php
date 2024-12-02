@@ -1,11 +1,11 @@
 <?php
     $file = rawurlencode(htmlspecialchars($_GET["file"]));
     $title = rawurlencode(htmlspecialchars($_GET["title"]));
-    $url = 'http://IP:PORT/api/documents/' . $file . '/download/';
+    $url = 'http://192.168.1.175:8000/api/documents/' . $file . '/download/';
     $opts = [
         "http" => [
             "method" => "GET",
-            "header" => "Authorization: Token <KEY>"
+            "header" => "Authorization: Token dc40ac0885827d22b8f9fb49b2044f62d732dcc2"
         ]
     ];
     $context = stream_context_create($opts);
