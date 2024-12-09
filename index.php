@@ -63,7 +63,7 @@ $(document).ready(function(){
         $opts = [
             "http" => [
                 "method" => "GET",
-                "header" => "Authorization: Token <KEY>"
+                "header" => "Authorization: Token KEY"
             ]
         ];
         $context = stream_context_create($opts);

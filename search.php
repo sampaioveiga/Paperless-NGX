@@ -57,7 +57,7 @@ $(document).ready(function(){
         $opts = [
             "http" => [
                 "method" => "GET",
-                "header" => "Authorization: Token <KEY>"
+                "header" => "Authorization: Token KEY"
             ]
         ];
         $context = stream_context_create($opts);
@@ -70,7 +70,7 @@ $(document).ready(function(){
     } else {
         $("#content").append('<ul id="results" class="list-group">');
         for (result of response.results) {
-            let txt = '<li class="list-group-item"><a href="./download.php?file=' + result.id + '&title=' + result.title + '"><p class="h3">' + result.title + '</p></a><p>' + result.__search_hit__.highlights + '</p></li>';
+            let txt = '<li class="list-group-item"><a href="./download.php?file=' + result.id + '&title=' + result.title + '"><p class="h3">' + result.title + '</p></a>' + result.created_date + '<p>' + result.__search_hit__.highlights + '</p></li>';
             $("#results").append(txt);
         }
         $("#content").append('</ul>');

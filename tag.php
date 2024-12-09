@@ -57,7 +57,7 @@ $(document).ready(function(){
         $opts = [
             "http" => [
                 "method" => "GET",
-                "header" => "Authorization: Token <KEY>"
+                "header" => "Authorization: Token KEY"
             ]
         ];
         $context = stream_context_create($opts);
@@ -70,12 +70,20 @@ $(document).ready(function(){
     } else {
         $("#content").append('<h1 class="display-1" id="title">Manual de Certifica&ccedil;&atilde;o DGS 2024</h1>');
         $("#content").append('<h2 class="display-2" id="subtitle"><?php echo substr(htmlspecialchars($_GET["q"]),6,-6); ?></h2>');
-        $("#content").append('<ul id="results" class="list-group">');
+        
+        //$("#content").append('<ul id="results" class="list-group">');
+        //for (result of response.results) {
+        //    let txt = '<li class="list-group-item"><a href="./download.php?file=' + result.id + '&title=' + result.title + '"><p class="h3">' + result.title + ' ' + result.created_date + '</p></a><p>' + result.__search_hit__.highlights + '</p></li>';
+        //    $("#results").append(txt);
+        //}
+        //$("#content").append('</ul>');
+
+        $("#content").append('<dl id="results" class="row">');
         for (result of response.results) {
-            let txt = '<li class="list-group-item"><a href="./download.php?file=' + result.id + '&title=' + result.title + '"><p class="h3">' + result.title + ' ' + result.created_date + '</p></a><p>' + result.__search_hit__.highlights + '</p></li>';
+            let txt = '<dt class="col-sm-2"><p class="h4">' + result.created_date + '</p></dt><dd class="col-sm-10"><p class="h3"><a href="./download.php?file=' + result.id + '&title=' + result.title + '">' + result.title + '</a></p></dd>';
             $("#results").append(txt);
         }
-        $("#content").append('</ul>');
+        $("#content").append('</dl>');
     }
 
 });
